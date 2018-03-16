@@ -1,0 +1,13 @@
+pipeline:
+  test:
+    image: alpine
+    commands:
+      - echo 'hello, yes, this is dog'
+
+  notify:
+    image: appleboy/drone-telegram
+    when: { status: [ success, failure ] }
+    secrets: [ telegram_token, telegram_to ]
+    message: |
+      *{{repo.owner}}/{{repo.name}} [{{commit.branch}}]*: Build #{{build.number}}: *{{uppercase build.status}}*
+      {{build.link}}
