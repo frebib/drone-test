@@ -3,6 +3,7 @@ pipeline:
     image: alpine
     commands:
       - echo 'hello, yes, this is dog'
+      - env
 
   notify:
     image: appleboy/drone-telegram
