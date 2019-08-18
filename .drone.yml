@@ -1,16 +1,36 @@
-pipeline:
-  test:
-    image: alpine
-    commands:
-      - env | sort
+---
+kind: pipeline
+name: default
 
-  notify:
-    image: spritsail/notify
-    when: { status: [ success, failure ] }
-    secrets: [ webhook_url, notify_token ]
+platform:
+  os: linux
 
-matrix:
-  TEST_VAR:
-    - one
-    - two
-    - three
+steps:
+- name: test
+  image: alpine
+  commands:
+  - env | sort
+
+- name: env-test
+  image: ${DRONE_REPO_OWNER}/${DRONE_REPO_NAME}
+  commands:
+  - echo yay it worked
+
+- name: notify
+  pull: if-not-exists
+  image: spritsail/notify
+  environment:
+    NOTIFY_TOKEN:
+      from_secret: notify_token
+    WEBHOOK_URL:
+      from_secret: webhook_url
+  when:
+    status:
+    - success
+    - failure
+
+---
+kind: signature
+hmac: e28da16d80a21eb81aa16a675c87a804f024b8fee0d5eed4641473e0ee6e9e4f
+
+...
