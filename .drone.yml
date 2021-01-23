@@ -1,0 +1,33 @@
+---
+kind: pipeline
+name: one
+
+steps:
+- name: build
+  image: alpine
+  commands:
+  - env | grep TOKEN=
+  - env | sort | grep -v TOKEN=
+
+---
+kind: pipeline
+name: two
+
+steps:
+- name: step1
+  image: alpine
+  commands:
+  - env | grep TOKEN=
+  - env | grep -v TOKEN= | sort
+
+- name: step2
+  image: alpine
+  commands:
+  - env | grep TOKEN=
+  - env | grep -v TOKEN= | sort
+
+---
+kind: signature
+hmac: b51a47298f8727c03fd8b005833fabe2ed5d37afb56fe6cf89e4d0fc1effefde
+
+...
