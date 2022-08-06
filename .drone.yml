@@ -1,0 +1,15 @@
+---
+kind: pipeline
+name: env
+
+steps:
+- name: build
+  image: alpine
+  commands:
+  - env | sort
+
+---
+kind: signature
+hmac: 27816dd151768d14b89a73d89f1492b8e36138342b632d938879c091e45077b0
+
+...
