@@ -1,0 +1,12 @@
+---
+kind: pipeline
+name: always errors
+
+clone:
+  disable: true
+
+steps:
+- name: errors
+  image: this-image-doesnt-exist
+
+...
