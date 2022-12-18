@@ -1,0 +1,15 @@
+---
+kind: pipeline
+name: always fails
+
+steps:
+- name: build
+  image: alpine
+  commands:
+  - false
+
+---
+kind: signature
+hmac: a6f9e40b94f5be4e73b5247212ca65bcd258eb0d1ff528abebc428108744d51e
+
+...
